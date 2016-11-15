@@ -11,6 +11,6 @@ nbproject/
 
 
 # Variables
-settings/settings.js
-settings/translations.js
+settings/settings.json
+settings/translations.json
 node_modules/
