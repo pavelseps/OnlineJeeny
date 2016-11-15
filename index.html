@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Jeeny</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/default-bootstrap.css">
+</head>
+<body>
+
+<header id="header" class="navbar navbar-inverse navbar-fixed-top">
+    <nav>
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand important" href="#">Jeeny<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#fancybox-help"  id="fancybox-help-open">Pomoc</a></li>
+                    <li><a href="#fancybox-settings" id="fancybox-settings-open" class="settings">Nastavení</a></li>
+                    <!--li><a href="#fancybox-login" >Přihlášení</a></li-->
+                    <!--TODO: nastavení a přihlášení-->
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 sidebar">
+            <div id="log"></div>
+            <div class="input-group">
+                <input type="text" id="entry" class="form-control" placeholder="Příkaz">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="send">Odeslat</button>
+                </span>
+            </div>
+        </div>
+        <div class="col-sm-9 main">
+            <div class="row buttons">
+                <div class="col-sm-3 col-md-2">
+                    <button id="pozdrav" class="simgle-command btn btn-success btn-block">Pozdrav</button>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <button href="#fancybox-novy-projekt" class="fancybox-open btn btn-success btn-block">Nový projekt</button>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <button href="#fancybox-testuj-prohlizece" class="fancybox-open btn btn-success btn-block">Testuj prohlížeče</button>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <button href="#fancybox-chci-pracovat" id="fancybox-chci-pracovat-open" class="btn btn-success btn-block">Chci pracovat</button>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <button href="#fancybox-mysql" id="fancybox-mysql-open" class="btn btn-success btn-block">Contao MySQL</button>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <button id="cas" class="simgle-command btn btn-success btn-block">Čas</button>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <button id="zpravy" class="simgle-command btn btn-success btn-block">iDnes</button>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <button id="jira" class="simgle-command btn btn-success btn-block">Jira</button>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <button id="zabava" class="simgle-command btn btn-success btn-block">9gag</button>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <button id="fonty" class="simgle-command btn btn-success btn-block">Google fonts</button>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <button id="poznamky" class="simgle-command btn btn-success btn-block">Poznámky</button>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <button id="rozhodni" class="simgle-command btn btn-success btn-block">Rozhodni</button>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <button id="Lorem ipsum" class="simgle-command btn btn-success btn-block">Lorem ipsum</button>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <button id="vhost" class="simgle-command btn btn-success btn-block">Virtualhost</button>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <button id="wiki" class="simgle-command btn btn-success btn-block">Websta wiki</button>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <button id="viewport" class="simgle-command btn btn-success btn-block">Metatag viewport</button>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <button id="simpsonovi" class="simgle-command btn btn-success btn-block">Simpsonovi</button>
+                </div>
+                <div class="col-sm-3 col-md-2">
+                    <button id="konec" class="simgle-command btn btn-success btn-block">Konec</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="fancybox-login" style="display: none;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h2>Příhlášení</h2>
+                <div class="input-group">
+                    <input type="password" id="pwd-input" class="form-control" placeholder="Heslo">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="pwd">Prihlásit</button>
+                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="fancybox-help" style="display: none;">
+    <h2>Pomoc</h2>
+    <div id="show-help"></div>
+</div>
+<div id="fancybox-novy-projekt" style="display: none;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h2>Nový projekt</h2>
+                <div class="form-group">
+                    <label>Jmeno projektu</label>
+                    <input type="text" id="project-name" class="form-control" placeholder="Jmeno">
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="open-folder"> Otevřít složku
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="create-vhost"> Vytvořit virtualhost
+                    </label>
+                </div>
+                <button class="btn btn-default" type="button" id="project">Vytvořit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="fancybox-testuj-prohlizece" style="display: none;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h2>Testuj prohlížeče</h2>
+                <div class="form-group">
+                    <label>Url webu</label>
+                    <input type="text" id="website-name" class="form-control" placeholder="Url">
+                </div>
+                <button class="btn btn-default" type="button" id="website">Testuj</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="fancybox-chci-pracovat" style="display: none;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h2>Chci pracovat</h2>
+                <div id="programs-list"></div>
+                <button class="btn btn-default" type="button" id="pracuj">Spustit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="fancybox-mysql" style="display: none;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h2>MySQL na localhostu pro Contao</h2>
+                <div class="form-group chose-db-settings">
+                    <label>Jméno databáze</label>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="choose-db"> Vytvořit novou databázi?</label>
+                    </div>
+                    <input type="text" class="form-control name-db" placeholder="Jméno databaze..">
+                    <select class="form-control name-db selected" data-live-search="true" title="Jméno databaze.."></select>
+                </div>
+                <div class="form-group">
+                    <label>Projekt</label>
+                    <select class="form-control" data-live-search="true" id="contao-project" title="Jméno projektu.."></select>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="contao-localcongig">Vytvořit localconfig.php</label>
+                </div>
+                <button class="btn btn-default" type="button" id="im-submit"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Import</button>
+                <button class="btn btn-default pull-right" type="button" id="ex-submit"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Export</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="fancybox-settings" style="display: none;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h2>Nastavení</h2>
+                <div class="data">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="js/jquery.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/init.js"></script>
+</body>
+</html>

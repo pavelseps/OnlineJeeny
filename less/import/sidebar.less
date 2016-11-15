@@ -1,0 +1,71 @@
+.sidebar{
+    position: relative;
+    background: #f7f7f9;
+    border-right: 1px solid #e1e1e8;
+
+    #log{
+        position: absolute;
+        left: @grid-gutter-width/2;
+        right: 0;
+        bottom: 80px;
+        top: @offset-top;
+        padding-right: @grid-gutter-width/2;
+        overflow-y: auto;
+
+        > div{
+            .clearfix();
+            margin-top: 10px;
+        }
+
+        .neutral{
+
+            span{
+                background-color: @state-warning-bg;
+                border: 1px solid @state-warning-border;
+                border-radius: 3px;
+                padding: 10px 15px;
+                display: block;
+                width: 75%;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+        }
+
+        .jeeny{
+
+            span{
+                width: 70%;
+                float: left;
+                display: block;
+                background-color: @state-danger-bg;
+                border: 1px solid @state-danger-border;
+                border-radius: 3px;
+                padding: 10px 15px;
+            }
+        }
+
+        .client{
+
+            span{
+                width: 70%;
+                float: right;
+                display: block;
+                background-color: @state-success-bg;
+                border: 1px solid @state-success-border;
+                border-radius: 3px;
+                padding: 10px 15px;
+                text-align: right;
+            }
+        }
+    }
+
+    .input-group{
+        position: absolute;
+        bottom: @grid-gutter-width;
+        left: 0;
+        padding-left: @grid-gutter-width/2;
+        padding-right: @grid-gutter-width/2;
+        width: 100%;
+    }
+}

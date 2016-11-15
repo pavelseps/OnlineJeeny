@@ -11,5 +11,6 @@ nbproject/
 
 
 # Variables
-import/variables.local.js
+settings/settings.js
+settings/translations.js
 node_modules/
