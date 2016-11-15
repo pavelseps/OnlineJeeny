@@ -14,3 +14,4 @@ nbproject/
 settings/settings.json
 settings/translations.json
 node_modules/
+createJSON.js

@@ -1,0 +1,51 @@
+{
+  "files": {
+    "rootProjectDir": [
+      "C:",
+      "Users",
+      "Test",
+      "work",
+      "projects"
+    ],
+    "poznamky": [
+
+    ],
+    "httpd_vhosts": [
+
+    ],
+    "win_host": [
+
+    ],
+    "wamp_mysql": [
+
+    ]
+  },
+  "websites": {
+    "zabava": "http://bbb.com/",
+    "jira": "",
+    "zpravy": "http://www.aaa.cz/"
+  },
+  "programsForWork": {
+    "programs": [
+      [
+        "Test program 1",
+        [
+          "C:",
+          "Program Files (x86)",
+          "Test Program 1",
+          "test1.exe"
+        ]
+      ],
+      [
+        "Test program 2",
+        [
+          "C:",
+          "Program Files (x86)",
+          "test",
+          "Test Program 2",
+          "test2.exe"
+        ]
+      ]
+    ]
+  }
+}

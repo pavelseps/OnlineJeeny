@@ -1,0 +1,13 @@
+{
+  "files": "Složky",
+  "websites": "Weby",
+  "programsForWork": "Programy pro práci",
+  "rootProjectDir": "Složka s projekty",
+  "poznamky": "Poznámky",
+  "httpd_vhosts": "Cesta k httpd-vhosts.conf",
+  "win_host": "Cesta k hosts",
+  "wamp_mysql": "Cesta k MySql složce",
+  "zabava": "Zábava",
+  "jira": "Jira",
+  "zpravy": "Zprávy"
+}
