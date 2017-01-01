@@ -7,9 +7,6 @@
       "work",
       "projects"
     ],
-    "poznamky": [
-
-    ],
     "httpd_vhosts": [
 
     ],
@@ -19,11 +16,6 @@
     "wamp_mysql": [
 
     ]
-  },
-  "websites": {
-    "zabava": "http://bbb.com/",
-    "jira": "",
-    "zpravy": "http://www.aaa.cz/"
   },
   "programsForWork": {
     "programs": [

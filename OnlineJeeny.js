@@ -9,26 +9,14 @@ const ncp = require("copy-paste");
 const path = require('path');
 const jsonfile = require('jsonfile');
 
-var locked = false;
-var commandData;
-var timer1;
-var timer2;
-var timer3;
-
-
-
 /**
  * Load settings
  */
 var settings = jsonfile.readFileSync(path.join('.', 'settings', 'settings.json'));
 var rootProjectDir = path.join.apply(this, settings.files.rootProjectDir);
-var poznamky = path.join.apply(this, settings.files.poznamky);
 var httpd_vhosts = path.join.apply(this, settings.files.httpd_vhosts);
 var win_host = path.join.apply(this, settings.files.win_host);
 var wamp_mysql = path.join.apply(this, settings.files.wamp_mysql);
-var zabava = settings.websites.zabava;
-var jira = settings.websites.jira;
-var zpravy = settings.websites.zpravy;
 var programsForWork = settings.programsForWork.programs;
 
 var translations = jsonfile.readFileSync(path.join('.', 'settings', 'translations.json'));
@@ -45,27 +33,11 @@ wss.on('connection', function(ws) {
     wso = ws;
     console.log('Server was connected.');
 
-    if(timer3 != null){
-        clearTimeout(timer1);
-        clearTimeout(timer2);
-        clearTimeout(timer3);
-        console.log('Destroyed Jeenys lock delay');
-    }
-
     ws.on('message', function(message) {
         message = JSON.parse(message);
         commandData = message.data;
         message = message.command;
-        console.log('Server received message: %s', message);
-        if(locked){
-            if(message == pwd){
-                locked = false;
-                ws.send(createJSON("Vítej, jsi přihlášen.", '', "logedIn", true));
-            }else{
-                JeenySays("Prosím, nejdříve se přihlaš.");
-            }
-            return;
-        }
+        console.log('Server received message: '+ message);
         message = message.toString().trim().toLowerCase();
         mainCycle(message);
     });
@@ -82,26 +54,15 @@ var commandsList = [
     ["html-all-projects-from-folder", false, allProjectsFromFolder],
     ["html-all-databases-from-wamp", false, allDatabasesFromWAMP],
     ["html-settings", false, settingsHtml],
-    ["lock", false, fcLock],
-    ["baf", false, fcBaf],
-    ["man", false, fcKeepCalm],
-    ["me jebne", false, fcKeepCalm],
     ["konec", "ukončíš Jeeny", fcKonec],
     ["novy projekt", "Jeeny vytvoří nový projekt", fcNovyProjekt],
     ["pozdrav", "Jeeny tě pozdraví", fcPozdrav],
-    ["cas", "Jeeny řekne aktuální čas", fcCas],
-    ["zpravy", "Jeeny ti ukáže zprávy na idnes", fcZpravy],
-    ["jira", "Jeeny otevře JIRU s otevřenýma projektama", fcJira],
-    ["zabava", "Jeeny otevře 9gag", fcZabava],
-    ["fonty", "Jeeny otevře google fonts", fcFonty],
-    ["poznamky", "Jeeny ti pustí texťák s poznámkama", fcPoznamky],
+    ["cas", "Jeeny řekne aktuální čas a vloží ti ho do schránky", fcCas],
     ["rozhodni", "Jeeny za tebe rozhodne, jestli ani nebo ne", fcRozhodni],
     ["chci pracovat", "Jeeny zapne všechny důležitý programy pro práci", fcPracuj],
     ["testuj prohlizece", "Jeeny otevře web ve všech prohlížečích", fcProhlizece],
     ["lorem ipsum", "Jeeny vloží do clipboardu část Lorem Ipsum textu", fcLorem],
     ["vhost", "Jeeny otevře soubory pro nastavení virtual hostu", fcVhost],
-    ["wiki", "Jeeny otevře Websta wiki", fcWiki],
-    ["viewport", "Jeeny ti dá do clipboardu metatagu viewport", fcViewport],
     ["simpsonovi", "Jeeny ti vybere nějaký náhodný díl ze serialu Simpsonovi", fcSimpsonovi],
     ["databaze-import", "Jeeny importuje databáze do WAMP", fcDatabazeImport],
     ["databaze-export", "Jeeny exportuje databáze z WAMP", fcDatabazeExport],
@@ -145,19 +106,6 @@ function callCommand(command){
 }
 function JeenySays(text){
     wso.send(createJSON(text));
-}
-function fcLock() {
-    /*console.log("Jeeny will be locked in 30min");
-    timer1 = setTimeout(function () {
-        console.log("Jeeny will be locked in 15min");
-    }, 60000*15);
-    timer2 = setTimeout(function () {
-        console.log("Jeeny will be locked in 5min");
-    }, 60000*25);
-    timer3 = setTimeout(function () {
-        locked = true;
-        console.log("Jeeny is locked");
-    }, 60000*30);*/
 }
 
 
@@ -267,14 +215,15 @@ function settingsHtml() {
 
             if(key == 'programsForWork'){
                 for(var i = 0; i<obj[prop].length; i++){
-                    panesHtml += '<div class="form-group"><label>'+translate(obj[prop][i][0])+'</label>';
+                    panesHtml += '<div class="form-group"><label>'+translate(obj[prop][i][0])+'</label><br>';
+                    value = '';
                     for(var x = 0; x<obj[prop][i][1].length; x++){
                         if(x != 0){
                             value += '/';
                         }
                         value += obj[prop][i][1][x];
                     }
-                    panesHtml += '<input type="text" class="form-control" value="'+value+'"></div>';
+                    panesHtml += '<span>'+value+'</span></div><hr>';
                 }
             }else{
                 if(Object.prototype.toString.call(obj[prop]) == '[object Array]'){
@@ -287,7 +236,7 @@ function settingsHtml() {
                 }else{
                     value = obj[prop];
                 }
-                panesHtml += '<div class="form-group"><label>'+translate(prop)+'</label><input type="text" class="form-control" value="'+value+'"></div>';
+                panesHtml += '<div class="form-group"><label>'+translate(prop)+'</label><br><span>'+value+'</span></div><hr>';
             }
 
         }
@@ -306,10 +255,21 @@ function settingsHtml() {
  * Functions for commands
  */
 function fcTest(){
-    JeenySays("Nemám co testovat.");
-}
-function fcBaf(){
-    JeenySays("Lek!");
+    var cp_cmd = cp.spawn('cmd');
+
+    cp_cmd.stdout.on('data', function (data) {console.log('stdout: ' + data);});
+
+    cp_cmd.on('exit', function (code) {
+        console.log('child process exited with code ' + code);
+    });
+
+    setTimeout(function() {
+        cp_cmd.stdin.write('C:\r\n');
+        cp_cmd.stdin.write('start "" "%SYSTEMDRIVE%\\Program Files (x86)\\Git\\bin\\sh.exe" --login -c "echo \'Hi.\'; read"\r\n');
+        cp_cmd.stdin.end();
+    }, 1000);
+
+    //JeenySays("Nemám co testovat.");
 }
 function fcKonec(){
     JeenySays("Přeji hezký zbytek dne, uvidíme se přiště.");
@@ -339,30 +299,6 @@ function fcCas(){
     ncp.copy(year+month+day+hour+min, function () {
     })
 }
-function fcZpravy(){
-    open(zpravy);
-    JeenySays("Otevírám idnes.");
-}
-function fcJira(){
-    open(jira);
-    JeenySays("Otevírám JIRU.");
-}
-function fcZabava(){
-    open(zabava);
-    JeenySays("Otevírám 9gag.");
-}
-function fcFonty(){
-    open('https://www.google.com/fonts');
-    JeenySays("Otevírám Google Fonts.");
-}
-function fcPoznamky(){
-    if(!(fs.existsSync(poznamky))){
-        JeenySays('Poznámky nenalezeny.');
-        return false;
-    }
-    cp.exec(poznamky);
-    JeenySays("Otevírám poznámky.");
-}
 function fcRozhodni(){
     var x = Math.floor((Math.random() * 2) + 1);
     if(x==1){
@@ -390,18 +326,6 @@ function fcVhost() {
     JeenySays("Otevírám soubor httpd-vhosts.");
     open(win_host);
     JeenySays("Otevírám soubor hosts.");
-}
-function fcWiki() {
-    open('http://wiki.websta.cz/');
-    JeenySays("Otevírám Websta wiki.");
-}
-function fcViewport() {
-    ncp.copy('<meta name="viewport" content="width=device-width, initial-scale=1">', function () {
-        JeenySays("Metatag je vložen do clipboardu.");
-    })
-}
-function fcKeepCalm() {
-    JeenySays("Zvedni se, udělej si kafe a pokračuj hezky v klidu.");
 }
 function fcSimpsonovi() {
     var num = Math.floor((Math.random() * 583) + 1);
@@ -433,6 +357,21 @@ function fcNovyProjekt(){
         JeenySays("Projekt \""+name+"\" je vytvořen.");
     }else{
         JeenySays("Projekt \""+name+"\" už je vytvořen.");
+    }
+
+    if(commandData.gitRepository != ""){
+        var cp_cmd = cp.spawn('cmd');
+
+        cp_cmd.stdout.on('data', function (data) {console.log('stdout: ' + data);});
+
+        var gitRepository = commandData.gitRepository;
+
+        setTimeout(function() {
+            cp_cmd.stdin.write('C:\r\n');
+            cp_cmd.stdin.write('cd '+path.join(dir, 'web')+'\r\n');
+            cp_cmd.stdin.write('start "" "%SYSTEMDRIVE%\\Program Files (x86)\\Git\\bin\\sh.exe" --login -c "git clone '+gitRepository+' ."\r\n');
+            cp_cmd.stdin.end();
+        }, 1000);
     }
 
     if(commandData.folder){

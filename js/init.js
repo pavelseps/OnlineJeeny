@@ -244,7 +244,8 @@ $('#project').click(function () {
         var data = {
             name: $('#project-name').val(),
             folder: $('#open-folder').is(":checked"),
-            vhost: $('#create-vhost').is(":checked")
+            vhost: $('#create-vhost').is(":checked"),
+            gitRepository: $('#git-repository').val()
         };
 
         ws.send(createJSON('novy projekt', data));
