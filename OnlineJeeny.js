@@ -68,8 +68,8 @@ var commandsList = [
     ["lorem ipsum", "Jeeny vloží do clipboardu část Lorem Ipsum textu", fcLorem],
     ["vhost", "Jeeny otevře soubory pro nastavení virtual hostu", fcVhost],
     ["simpsonovi", "Jeeny ti vybere nějaký náhodný díl ze serialu Simpsonovi", fcSimpsonovi],
-    ["databaze-import", "Jeeny importuje databáze do WAMP", fcDatabazeImport],
-    ["databaze-export", "Jeeny exportuje databáze z WAMP", fcDatabazeExport],
+    ["databaze-import", false, fcDatabazeImport],
+    ["databaze-export", false, fcDatabazeExport],
     ["test", false, fcTest]     //Function for testing
 ];
 
