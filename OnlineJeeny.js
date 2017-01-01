@@ -255,21 +255,7 @@ function settingsHtml() {
  * Functions for commands
  */
 function fcTest(){
-    var cp_cmd = cp.spawn('cmd');
-
-    cp_cmd.stdout.on('data', function (data) {console.log('stdout: ' + data);});
-
-    cp_cmd.on('exit', function (code) {
-        console.log('child process exited with code ' + code);
-    });
-
-    setTimeout(function() {
-        cp_cmd.stdin.write('C:\r\n');
-        cp_cmd.stdin.write('start "" "%SYSTEMDRIVE%\\Program Files (x86)\\Git\\bin\\sh.exe" --login -c "echo \'Hi.\'; read"\r\n');
-        cp_cmd.stdin.end();
-    }, 1000);
-
-    //JeenySays("Nemám co testovat.");
+    JeenySays("Nemám co testovat.");
 }
 function fcKonec(){
     JeenySays("Přeji hezký zbytek dne, uvidíme se přiště.");
