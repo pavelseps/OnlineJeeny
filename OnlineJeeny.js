@@ -29,6 +29,10 @@ var translations = jsonfile.readFileSync(path.join('.', 'settings', 'translation
 var wss = new WebSocketServer({host: '127.0.0.1',port: 9000});
 console.log('New server created, waiting for connections...');
 var wso;
+
+/**
+ * Create connection
+ */
 wss.on('connection', function(ws) {
     wso = ws;
     console.log('Server was connected.');
@@ -70,8 +74,9 @@ var commandsList = [
 ];
 
 
-
-
+/**
+ * Main functions
+ */
 function createJSON(text, data, command, hidden){
     return JSON.stringify(
         {
