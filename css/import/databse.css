@@ -1,8 +1,0 @@
-.chose-db-settings input,
-.chose-db-settings select {
-  display: none;
-}
-.chose-db-settings input.selected,
-.chose-db-settings select.selected {
-  display: block;
-}
